@@ -23,6 +23,36 @@ class WasteDetectionScreen extends StatefulWidget {
 class _WasteDetectionScreenState extends State<WasteDetectionScreen> {
   List<String> categorizedWaste = [];
 
+  void _checkAnswer(WasteObject wasteObject, bool userAnswer) {
+    if (wasteObject.isWaste == null) {
+      if (wasteObject.isWaste == userAnswer) {
+        // Correct answer, image will disappear
+        setState(() {
+          categorizedWaste.add('Waste: ${wasteObject.imagePath}');
+          wasteObject.isWaste = true; // Mark the image as waste
+        });
+      } else {
+        // Wrong answer, show "Try Again" dialog
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Wrong Answer! Try Again.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Try Again'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,27 +78,17 @@ class _WasteDetectionScreenState extends State<WasteDetectionScreen> {
 
                     // Buttons to categorize waste or non-waste
                     Row(
-                      // crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ElevatedButton(
                           onPressed: () {
-                            setState(() {
-                              wasteObject.isWaste = true; // Marked as waste
-                              categorizedWaste
-                                  .add('Waste: ${wasteObject.imagePath}');
-                            });
+                            _checkAnswer(wasteObject, true);
                           },
                           child: Text('Waste'),
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            setState(() {
-                              wasteObject.isWaste =
-                                  false; // Marked as non-waste
-                              categorizedWaste
-                                  .add('Non-Waste: ${wasteObject.imagePath}');
-                            });
+                            _checkAnswer(wasteObject, false);
                           },
                           child: Text('Non-Waste'),
                         ),
@@ -81,7 +101,7 @@ class _WasteDetectionScreenState extends State<WasteDetectionScreen> {
                     if (wasteObject.isWaste != null)
                       Text(
                         wasteObject.isWaste!
-                            ? 'Correct Answer!'
+                            ? 'Correct Answer! Image will disappear.'
                             : 'Wrong Answer! Try again.',
                         style: TextStyle(
                           color:
@@ -94,19 +114,20 @@ class _WasteDetectionScreenState extends State<WasteDetectionScreen> {
               ),
 
             // Button to navigate to the WasteCategorizingScreen
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => WasteCategorizingScreen(
-                      categorizedWaste: categorizedWaste,
+            if (categorizedWaste.length == wasteObjects.length)
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => WasteCategorizingScreen(
+                        categorizedWaste: categorizedWaste,
+                      ),
                     ),
-                  ),
-                );
-              },
-              child: Text('Go to Waste Categorizing'),
-            ),
+                  );
+                },
+                child: Text('Go to Waste Categorizing'),
+              ),
           ],
         ),
       ),
