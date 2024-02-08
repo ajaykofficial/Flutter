@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 2),
+      duration: Duration(seconds: 1),
     );
 
     _logoAnimation = Tween<double>(begin: 0, end: 1).animate(
