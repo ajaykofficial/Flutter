@@ -1,3 +1,4 @@
+import 'package:eco_explorers/screens/map_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,10 +15,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 800),
+      duration: Duration(milliseconds: 1500),
     );
     _animation = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
-    _controller.repeat(reverse: true);
+    _controller.forward().then((_) {
+      _controller.stop(); // Stop the animation after it completes
+    });
   }
 
   @override
@@ -58,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               // Positioned image 1
               AnimatedPositioned(
                 duration: Duration(milliseconds: 500),
-                top: MediaQuery.of(context).size.height * 0.40 - 40,
+                top: MediaQuery.of(context).size.height * 0.30 - 40,
                 left: MediaQuery.of(context).size.width * 0.5 - 40,
                 child: ScaleTransition(
                   scale: _animation,
@@ -66,8 +69,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     imagePath: 'assets/images/binbutton1.png',
                     missionName: 'Mission 1',
                     onTap: () {
-                      // Navigate to Mission 1 screen
-                      Navigator.pushNamed(context, '/mission1');
+                      // Navigate to the MapScreen when Mission 1 is clicked
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => MapScreen()),
+                      );
                     },
                   ),
                 ),
@@ -76,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               AnimatedPositioned(
                 duration: Duration(milliseconds: 500),
                 top: MediaQuery.of(context).size.height * 0.65 - 80,
-                left: MediaQuery.of(context).size.width * 0.25 - 40,
+                left: MediaQuery.of(context).size.width * 0.15 - 40,
                 child: ScaleTransition(
                   scale: _animation,
                   child: MissionImage(
@@ -93,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               AnimatedPositioned(
                 duration: Duration(milliseconds: 500),
                 top: MediaQuery.of(context).size.height * 0.65 - 80,
-                left: MediaQuery.of(context).size.width * 0.75 - 40,
+                left: MediaQuery.of(context).size.width * 0.85 - 40,
                 child: ScaleTransition(
                   scale: _animation,
                   child: MissionImage(
@@ -109,9 +115,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               // Progress bar 1 (between Mission 1 and Mission 2)
               Positioned(
                 top: MediaQuery.of(context).size.height * 0.61 - 10,
-                left: MediaQuery.of(context).size.width * 0.46 - 40,
+                left: MediaQuery.of(context).size.width * 0.46 - 63,
                 child: SizedBox(
-                  width: 110,
+                  width: 160,
                   height: 5,
                   child: LinearProgressIndicator(
                     backgroundColor: Colors.grey,
@@ -121,12 +127,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ),
               // Progress bar 2 (between Mission 2 and Mission 3)
               Positioned(
-                top: MediaQuery.of(context).size.height * 0.51 - 10,
-                left: MediaQuery.of(context).size.width * 0.19 + 15,
+                top: MediaQuery.of(context).size.height * 0.48 - 10,
+                left: MediaQuery.of(context).size.width * 0.10 + 15,
                 child: Transform.rotate(
                   angle: -1.047, // Rotate by -60 degrees (-pi/3 radians)
                   child: SizedBox(
-                    width: 110,
+                    width: 140,
                     height: 5,
                     child: LinearProgressIndicator(
                       backgroundColor: Colors.grey,
@@ -137,13 +143,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ),
               // Progress bar 3 (between Mission 1 and Mission 3)
               Positioned(
-                top: MediaQuery.of(context).size.height * 0.51 - 10,
-                left: MediaQuery.of(context).size.width * 0.62 - 55,
+                top: MediaQuery.of(context).size.height * 0.48 - 10,
+                left: MediaQuery.of(context).size.width * 0.66 - 55,
                 child: Transform.rotate(
                   angle: 1.047, // Rotate by 60 degrees (pi/3 radians)
                   child: SizedBox(
-                    width: 110,
-                    height: 4,
+                    width: 140,
+                    height: 5,
                     child: LinearProgressIndicator(
                       backgroundColor: Colors.grey,
                       valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
