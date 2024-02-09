@@ -1,14 +1,12 @@
+import 'package:eco_explorers/screens/waste_detection_screen.dart';
 import 'package:flutter/material.dart';
 
 class MapScreen extends StatelessWidget {
-  final ScrollController _controller =
-      ScrollController(initialScrollOffset: 1700);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        controller: _controller,
+        reverse: true,
         child: Stack(
           children: [
             // Full-screen image background
@@ -22,11 +20,16 @@ class MapScreen extends StatelessWidget {
             ),
             // Positioned buttons within the image
             Positioned(
-              left: 150,
-              bottom: 30,
+              left: MediaQuery.of(context).size.width * 0.4,
+              bottom: MediaQuery.of(context).size.height * 0.05,
               child: GestureDetector(
                 onTap: () {
-                  // Handle button press
+                  // Handle button 1 press
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => WasteDetectionScreen()),
+                  );
                 },
                 child: Image.asset(
                   'assets/images/1.png',
@@ -36,8 +39,8 @@ class MapScreen extends StatelessWidget {
               ),
             ),
             Positioned(
-              right: 70,
-              bottom: 250,
+              right: MediaQuery.of(context).size.width * 0.25,
+              bottom: MediaQuery.of(context).size.height * 0.33,
               child: GestureDetector(
                 onTap: () {
                   // Handle button press
@@ -50,8 +53,8 @@ class MapScreen extends StatelessWidget {
               ),
             ),
             Positioned(
-              left: 70,
-              bottom: 470,
+              left: MediaQuery.of(context).size.width * 0.15,
+              bottom: MediaQuery.of(context).size.height * 0.55,
               child: GestureDetector(
                 onTap: () {
                   // Handle button press
@@ -64,8 +67,8 @@ class MapScreen extends StatelessWidget {
               ),
             ),
             Positioned(
-              right: 110,
-              bottom: 690,
+              right: MediaQuery.of(context).size.width * 0.30,
+              bottom: MediaQuery.of(context).size.height * 0.80,
               child: GestureDetector(
                 onTap: () {
                   // Handle button press
@@ -78,8 +81,8 @@ class MapScreen extends StatelessWidget {
               ),
             ),
             Positioned(
-              right: 140,
-              bottom: 950,
+              right: MediaQuery.of(context).size.width * 0.41,
+              bottom: MediaQuery.of(context).size.height * 1.15,
               child: GestureDetector(
                 onTap: () {
                   // Handle button press
