@@ -1,5 +1,6 @@
 import 'package:eco_explorers/screens/waste_detection_screen.dart';
 import 'package:flutter/material.dart';
+import 'map_screen.dart'; // Import your map screen file
 
 class MapScreen extends StatelessWidget {
   @override
@@ -28,7 +29,18 @@ class MapScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => WasteDetectionScreen()),
+                        builder: (context) => WasteDetectionScreen(
+                              imageSet: [
+                                MapImage(
+                                  imagePath: 'assets/images/apple_nonwaste.png',
+                                  isWaste: false,
+                                ),
+                                MapImage(
+                                  imagePath: 'assets/images/apple_waste.png',
+                                  isWaste: true,
+                                ),
+                              ],
+                            )),
                   );
                 },
                 child: Image.asset(
@@ -43,7 +55,25 @@ class MapScreen extends StatelessWidget {
               bottom: MediaQuery.of(context).size.height * 0.33,
               child: GestureDetector(
                 onTap: () {
-                  // Handle button press
+                  // Handle button 2 press
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => WasteDetectionScreen(
+                              imageSet: [
+                                MapImage(
+                                  imagePath:
+                                      'assets/images/plastic_bottle_waste.png',
+                                  isWaste: true,
+                                ),
+                                MapImage(
+                                  imagePath:
+                                      'assets/images/plastic_bottle_nonwaste.png',
+                                  isWaste: false,
+                                ),
+                              ],
+                            )),
+                  );
                 },
                 child: Image.asset(
                   'assets/images/2.png',
@@ -57,7 +87,23 @@ class MapScreen extends StatelessWidget {
               bottom: MediaQuery.of(context).size.height * 0.55,
               child: GestureDetector(
                 onTap: () {
-                  // Handle button press
+                  // Handle button 3 press
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => WasteDetectionScreen(
+                              imageSet: [
+                                MapImage(
+                                  imagePath: 'assets/images/apple_waste.png',
+                                  isWaste: true,
+                                ),
+                                MapImage(
+                                  imagePath: 'assets/images/apple_nonwaste.png',
+                                  isWaste: false,
+                                ),
+                              ],
+                            )),
+                  );
                 },
                 child: Image.asset(
                   'assets/images/3.png',
@@ -71,7 +117,23 @@ class MapScreen extends StatelessWidget {
               bottom: MediaQuery.of(context).size.height * 0.80,
               child: GestureDetector(
                 onTap: () {
-                  // Handle button press
+                  // Handle button 4 press
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => WasteDetectionScreen(
+                              imageSet: [
+                                MapImage(
+                                  imagePath: 'assets/images/apple_nonwaste.png',
+                                  isWaste: false,
+                                ),
+                                MapImage(
+                                  imagePath: 'assets/images/apple_waste.png',
+                                  isWaste: true,
+                                ),
+                              ],
+                            )),
+                  );
                 },
                 child: Image.asset(
                   'assets/images/4.png',
@@ -85,7 +147,23 @@ class MapScreen extends StatelessWidget {
               bottom: MediaQuery.of(context).size.height * 1.15,
               child: GestureDetector(
                 onTap: () {
-                  // Handle button press
+                  // Handle button 5 press
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => WasteDetectionScreen(
+                              imageSet: [
+                                MapImage(
+                                  imagePath: 'assets/images/apple_nonwaste.png',
+                                  isWaste: false,
+                                ),
+                                MapImage(
+                                  imagePath: 'assets/images/apple_waste.png',
+                                  isWaste: true,
+                                ),
+                              ],
+                            )),
+                  );
                 },
                 child: Image.asset(
                   'assets/images/5.png',
@@ -99,4 +177,14 @@ class MapScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+class MapImage {
+  final String imagePath;
+  final bool isWaste;
+
+  MapImage({
+    required this.imagePath,
+    required this.isWaste,
+  });
 }
