@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 3),
+      duration: Duration(seconds: 3), // Reduce animation duration
     );
 
     _logoAnimation = Tween<double>(begin: 0, end: 1).animate(
@@ -55,12 +55,13 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white, // Change background color to white
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Colors.lightBlueAccent, Colors.greenAccent],
+            colors: [Color(0xFF64B5F6), Color(0xFF1976D2)], // Gradient colors
           ),
         ),
         child: Center(
@@ -72,8 +73,8 @@ class _SplashScreenState extends State<SplashScreen>
                 child: ClipOval(
                   child: Image.asset(
                     'assets/images/logo10.jpeg',
-                    width: 200,
-                    height: 200,
+                    width: 150,
+                    height: 150,
                   ),
                 ),
               ),
@@ -83,8 +84,8 @@ class _SplashScreenState extends State<SplashScreen>
                 child: Text(
                   'Eco Explorers',
                   style: TextStyle(
-                    fontSize: 32,
-                    color: Colors.white,
+                    fontSize: 28,
+                    color: Colors.white, // Change text color to white
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -103,14 +104,14 @@ class _SplashScreenState extends State<SplashScreen>
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Colors.white, // Change container color to white
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: Text(
                       'Welcome to the Adventure!',
                       style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.blue,
+                        fontSize: 16, // Reduce font size
+                        color: Colors.blue, // Change text color to blue
                         fontWeight: FontWeight.bold,
                       ),
                     ),

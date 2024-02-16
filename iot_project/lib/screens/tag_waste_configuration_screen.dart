@@ -52,7 +52,12 @@ class _TagWasteConfigurationScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tag-Waste Configuration'),
+        title: Text(
+          'Tag-Waste Configuration',
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+        ),
+        backgroundColor:
+            Colors.blue.shade600, // Set the appbar background color
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -60,7 +65,7 @@ class _TagWasteConfigurationScreenState
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color(0xFF0D47A1),
+              Color(0xFF64B5F6),
               Color(0xFF1976D2),
             ],
           ),
@@ -140,6 +145,13 @@ class TagWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: tagColor,
         borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.3),
+            blurRadius: 5,
+            offset: Offset(0, 3),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

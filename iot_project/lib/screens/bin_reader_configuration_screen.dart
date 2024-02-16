@@ -25,9 +25,9 @@ class _BinReaderConfigurationScreenState
 
   // List of readers and corresponding colors
   Map<String, Color> readerOptions = {
-    'Reader 1': Color.fromARGB(255, 243, 51, 8),
-    'Reader 2': Color.fromARGB(255, 7, 245, 79),
-    'Reader 3': Color.fromARGB(255, 33, 18, 248),
+    'Reader 1': Colors.blue,
+    'Reader 2': Colors.green,
+    'Reader 3': Colors.orange,
   };
 
   @override
@@ -36,20 +36,22 @@ class _BinReaderConfigurationScreenState
       appBar: AppBar(
         title: Text(
           'Bin Reader Configuration',
-          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
         ),
-        backgroundColor:
-            Color.fromARGB(255, 134, 249, 247), // Set app bar color
+        backgroundColor: Colors.lightBlue, // Set app bar color
       ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color.fromARGB(255, 134, 246, 112),
-              Color.fromARGB(255, 103, 214, 250)
+              Color(0xFF00AEEF),
+              Color.fromARGB(255, 229, 226, 22),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
+            stops: [0.0, 1.0],
+            tileMode: TileMode.clamp,
           ),
         ),
         child: Padding(
@@ -82,11 +84,11 @@ class _BinReaderConfigurationScreenState
                     },
                     child: Text(
                       'Save Configuration',
-                      style: TextStyle(fontSize: 20, color: Colors.black),
+                      style: TextStyle(fontSize: 20, color: Colors.white),
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color.fromARGB(
-                          255, 138, 247, 205), // Set button color
+                          255, 122, 220, 247), // Set button color
                     ),
                   ),
                 ),
@@ -106,8 +108,8 @@ class _BinReaderConfigurationScreenState
           decoration: BoxDecoration(
             color: selectedReaders[bin]?.isNotEmpty == true
                 ? readerOptions[selectedReaders[bin]] ?? Colors.yellow
-                : Colors.white,
-            borderRadius: BorderRadius.circular(20),
+                : Colors.grey[300],
+            borderRadius: BorderRadius.circular(40),
           ),
           padding: EdgeInsets.all(20),
           child: Column(

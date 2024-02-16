@@ -51,7 +51,7 @@ class SettingsScreen extends StatelessWidget {
                     horizontal: 16,
                   ),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(40),
                   ),
                   elevation: 10,
                 ),
@@ -96,7 +96,7 @@ class SettingsScreen extends StatelessWidget {
                     horizontal: 16,
                   ),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(40),
                   ),
                   elevation: 10,
                 ),
@@ -141,7 +141,7 @@ class SettingsScreen extends StatelessWidget {
                     horizontal: 16,
                   ),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(40),
                   ),
                   elevation: 10,
                 ),
@@ -186,7 +186,7 @@ class SettingsScreen extends StatelessWidget {
                     horizontal: 16,
                   ),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(40),
                   ),
                   elevation: 10,
                 ),

@@ -8,9 +8,15 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Waste Management Game',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.white, // Change text color to white
+          ),
         ),
         backgroundColor: Colors.tealAccent[700], // Set app bar background color
+        elevation: 0, // Remove elevation for a flatter look
+        centerTitle: true, // Center the title
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -35,25 +41,26 @@ class HomeScreen extends StatelessWidget {
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
-                      vertical: 30.0, horizontal: 80.0),
+                      vertical: 20.0,
+                      horizontal: 40.0), // Increase button padding
                   child: Text(
                     'Play Game',
                     style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
+                      fontSize: 24, // Increase font size
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromARGB(
-                      255, 64, 74, 255), // Set button background color
+                  backgroundColor: Colors.blue, // Change button color to blue
                   shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(30), // Set button border radius
+                    borderRadius: BorderRadius.circular(
+                        40), // Increase button border radius
                   ),
                 ),
               ),
-              SizedBox(height: 50),
+              SizedBox(height: 30),
               ElevatedButton(
                 onPressed: () {
                   // Navigate to the IoT configuration screen
@@ -64,21 +71,23 @@ class HomeScreen extends StatelessWidget {
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
-                      vertical: 30.0, horizontal: 100.0),
+                      vertical: 20.0,
+                      horizontal: 50.0), // Increase button padding
                   child: Text(
                     'Settings',
                     style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
+                      fontSize: 24, // Increase font size
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor:
-                      Colors.orangeAccent, // Set button background color
+                      Colors.orangeAccent, // Change button color to orange
                   shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(30), // Set button border radius
+                    borderRadius: BorderRadius.circular(
+                        40), // Increase button border radius
                   ),
                 ),
               ),

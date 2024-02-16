@@ -40,7 +40,11 @@ class _AssignWasteScreenState extends State<AssignWasteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Assign Waste to ${widget.tag.name}'),
+        title: Text(
+          'Assign Waste to ${widget.tag.name}',
+          style: TextStyle(color: Colors.white), // Set appbar text color
+        ),
+        backgroundColor: Colors.blue.shade600, // Set appbar background color
       ),
       body: ListView.builder(
         itemCount: widget.wastes.length,
@@ -91,7 +95,10 @@ class _AssignWasteScreenState extends State<AssignWasteScreen> {
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
-                              color: isSelected ? Colors.white : null,
+                              color: isSelected
+                                  ? Colors.white
+                                  : Colors
+                                      .black, // Adjust text color based on selection
                             ),
                           ),
                           SizedBox(height: 4),

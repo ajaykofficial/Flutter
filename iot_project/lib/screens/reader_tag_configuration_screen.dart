@@ -10,8 +10,8 @@ class _ReaderTagConfigurationScreenState
     extends State<ReaderTagConfigurationScreen> {
   List<List<int>> assignedTags = List.generate(3, (index) => []);
   List<Color> readerColors = [
-    Colors.lightBlue,
-    Colors.orange,
+    Colors.blue,
+    Colors.red,
     Colors.green,
   ];
 
@@ -21,19 +21,20 @@ class _ReaderTagConfigurationScreenState
       appBar: AppBar(
         title: Text(
           'Reader-Tag Configuration',
-          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
         ),
         backgroundColor: Colors.blue.shade600,
       ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              Color.fromARGB(255, 146, 244, 119),
-              Color.fromARGB(255, 117, 216, 252),
-            ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
+            colors: [
+              Color.fromARGB(255, 122, 235, 255),
+              Color.fromARGB(255, 132, 255, 181),
+            ],
           ),
         ),
         child: Padding(
@@ -158,13 +159,6 @@ class _ReaderTagConfigurationScreenState
                         decoration: BoxDecoration(
                           color: readerColors[index],
                           borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.3),
-                              blurRadius: 5,
-                              offset: Offset(0, 3),
-                            ),
-                          ],
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -271,9 +265,6 @@ class ReaderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double totalHeight = assignedTags.length * 40.0 +
-        100.0; // Assuming each tag has a height of 40.0
-
     return GestureDetector(
       onTap: onTap,
       child: Container(
