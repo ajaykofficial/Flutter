@@ -1,4 +1,4 @@
-import 'package:eco_quest/pages/map_screen.dart';
+import 'package:eco_quest/pages/level_screen.dart';
 import 'package:flutter/material.dart';
 
 class PlayerSelection extends StatelessWidget {
@@ -50,7 +50,7 @@ class PlayerSelection extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const MapScreen()));
+                          builder: (context) => const LevelScreen()));
                 },
                 child: const Text(
                   'Single Player',

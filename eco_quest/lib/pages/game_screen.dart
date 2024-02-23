@@ -1,17 +1,33 @@
 import 'package:flutter/material.dart';
 
-class GameScreen extends StatelessWidget {
+class GameScreen extends StatefulWidget {
   final int numWasteImages;
-  const GameScreen({Key? key, required this.numWasteImages}) : super(key: key);
+  const GameScreen(
+      {Key? key, required this.numWasteImages, required String levelParameter})
+      : super(key: key);
+
+  @override
+  _GameScreenState createState() => _GameScreenState();
+}
+
+class _GameScreenState extends State<GameScreen> {
+  int selectedWasteIndex = -1;
+  int selectedBioBinIndex = -1;
+  int selectedEWasteBinIndex = -1;
+  int selectedPlasticWasteBinIndex = -1;
+
   @override
   Widget build(BuildContext context) {
     List wasteImage = [
-      (path: "assets/images/apple_waste.jpg", category: "Bio-Waste"),
-      (path: "assets/images/apple_waste.jpg", category: "E-Waste"),
-      (path: "assets/images/apple_waste.jpg", category: "Plastic-Waste"),
-      (path: "assets/images/apple_waste.jpg", category: "Bio-Waste"),
-      (path: "assets/images/apple_waste.jpg", category: "E-Waste"),
-      (path: "assets/images/apple_waste.jpg", category: "Plastic-Waste"),
+      (path: "assets/images/apple_waste.png", category: "Bio-Waste"),
+      (path: "assets/images/ewaste_computer.png", category: "E-Waste"),
+      (
+        path: "assets/images/plastic_bottle_waste.png",
+        category: "Plastic-Waste"
+      ),
+      (path: "assets/images/banana_peel.png", category: "Bio-Waste"),
+      (path: "assets/images/broken_phone.png", category: "E-Waste"),
+      (path: "assets/images/red_can.png", category: "Plastic-Waste"),
     ];
 
     return Scaffold(
@@ -34,49 +50,104 @@ class GameScreen extends StatelessWidget {
             height: double.infinity,
             fit: BoxFit.cover,
           ),
-          ListView.builder(
-              // scrollDirection: Axis.horizontal,
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: GridView.builder(
+              shrinkWrap: true,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  mainAxisExtent: 150,
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 30,
+                  mainAxisSpacing: 30),
               itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectedWasteIndex = index;
+                    });
+                  },
                   child: Card(
-                    child: ListTile(
-                      onTap: () {},
-                      title: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          wasteImage[index].category,
-                          style: const TextStyle(
-                              fontFamily: 'Norican-Regular',
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        ),
+                    color: selectedWasteIndex == index
+                        ? Colors.amber
+                        : Colors.white.withOpacity(0.8),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.asset(
+                        wasteImage[index].path,
                       ),
-                      leading: CircleAvatar(
-                          radius: 30,
-                          child: Image.asset(
-                            '${wasteImage[index].path}',
-                          )),
                     ),
                   ),
                 );
               },
-              itemCount: numWasteImages),
+              itemCount: widget.numWasteImages,
+            ),
+          ),
           Positioned(
             bottom: 50,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Image.asset(
-                  'assets/images/reader_biowaste_bin.png',
-                  width: 120,
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectedBioBinIndex = 0;
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color:
+                          selectedBioBinIndex == 0 ? Colors.greenAccent : null,
+                    ),
+                    height: 130,
+                    width: 130,
+                    child: Image.asset(
+                      'assets/images/reader_biowaste_bin.png',
+                      width: 120,
+                    ),
+                  ),
                 ),
-                Image.asset(
-                  'assets/images/reader_ewaste_bin.png',
-                  width: 130,
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectedEWasteBinIndex = 1;
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: selectedEWasteBinIndex == 1
+                          ? Colors.yellowAccent
+                          : null,
+                    ),
+                    height: 130,
+                    width: 130,
+                    child: Image.asset(
+                      'assets/images/reader_ewaste_bin.png',
+                      width: 130,
+                    ),
+                  ),
                 ),
-                Image.asset(
-                  'assets/images/reader_plasticwaste_bin.png',
-                  width: 130,
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectedPlasticWasteBinIndex = 2;
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: selectedPlasticWasteBinIndex == 2
+                          ? Colors.blueAccent
+                          : null,
+                    ),
+                    height: 130,
+                    width: 130,
+                    child: Image.asset(
+                      'assets/images/reader_plasticwaste_bin.png',
+                      width: 130,
+                    ),
+                  ),
                 ),
               ],
             ),

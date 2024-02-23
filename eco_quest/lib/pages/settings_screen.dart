@@ -1,3 +1,7 @@
+import 'package:eco_quest/pages/avatar_customization_screen.dart';
+import 'package:eco_quest/pages/bin_reader_configuration_screen.dart';
+import 'package:eco_quest/pages/reader_tag_configuration_screen.dart';
+import 'package:eco_quest/pages/tag_waste_configuration_screen.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -19,7 +23,7 @@ class SettingsScreen extends StatelessWidget {
       ),
       body: Stack(children: [
         Image.asset(
-          'assets/images/kids-library_bg.jpg',
+          'assets/images/kids-running-water_bg.jpg',
           width: double.infinity,
           height: double.infinity,
           fit: BoxFit.cover,
@@ -35,52 +39,101 @@ class SettingsScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(5.0),
                   child: ElevatedButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Avatar Customization',
-                        style: TextStyle(
-                            // fontFamily: 'Norican-Regular',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20),
-                      )),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  const AvatarCustomization()));
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.amberAccent,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 50, vertical: 20),
+                    ),
+                    child: const Text(
+                      'Avatar Customization',
+                      style: TextStyle(
+                          color: Colors.white,
+                          // fontFamily: 'Solgas',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                    ),
+                  ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(5.0),
                   child: ElevatedButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Bin-Reader Configuration',
-                        style: TextStyle(
-                            // fontFamily: 'Norican-Regular',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20),
-                      )),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  BinReaderConfigurationScreen()));
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.lightBlueAccent,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 30, vertical: 20)),
+                    child: const Text(
+                      'Bin-Reader Configuration',
+                      style: TextStyle(
+                          color: Colors.white,
+                          // fontFamily: 'Norican-Regular',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                    ),
+                  ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(5.0),
                   child: ElevatedButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Reader-Tag Configuration',
-                        style: TextStyle(
-                            // fontFamily: 'Norican-Regular',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20),
-                      )),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  ReaderTagConfigurationScreen()));
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.redAccent,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 30, vertical: 20)),
+                    child: const Text(
+                      'Reader-Tag Configuration',
+                      style: TextStyle(
+                          color: Colors.white,
+                          // fontFamily: 'Norican-Regular',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                    ),
+                  ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(5.0),
                   child: ElevatedButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Tag-Waste Configuration',
-                        style: TextStyle(
-                            // fontFamily: 'Norican-Regular',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20),
-                      )),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  TagWasteConfigurationScreen()));
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.greenAccent,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 30, vertical: 20)),
+                    child: const Text(
+                      'Tag-Waste Configuration',
+                      style: TextStyle(
+                          color: Colors.white,
+                          // fontFamily: 'Norican-Regular',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                    ),
+                  ),
                 ),
               ],
             ),
