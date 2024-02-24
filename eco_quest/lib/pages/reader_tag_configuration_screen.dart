@@ -40,7 +40,10 @@ class ReaderTagConfigurationScreen extends StatelessWidget {
                         child: Card(
                           child: Column(
                             children: [
-                              Image.asset('assets/images/tag1.png'),
+                              Image.asset(
+                                'assets/images/tag1.png',
+                                width: 100,
+                              ),
                               const Text(
                                 'Tag-1',
                                 style: TextStyle(
@@ -56,7 +59,10 @@ class ReaderTagConfigurationScreen extends StatelessWidget {
                         child: Card(
                           child: Column(
                             children: [
-                              Image.asset('assets/images/tag1.png'),
+                              Image.asset(
+                                'assets/images/tag1.png',
+                                width: 100,
+                              ),
                               const Text(
                                 'Tag-2',
                                 style: TextStyle(
@@ -72,7 +78,10 @@ class ReaderTagConfigurationScreen extends StatelessWidget {
                         child: Card(
                           child: Column(
                             children: [
-                              Image.asset('assets/images/tag1.png'),
+                              Image.asset(
+                                'assets/images/tag1.png',
+                                width: 100,
+                              ),
                               const Text(
                                 'Tag-3',
                                 style: TextStyle(
@@ -96,7 +105,10 @@ class ReaderTagConfigurationScreen extends StatelessWidget {
                         child: Card(
                           child: Column(
                             children: [
-                              Image.asset('assets/images/tag1.png'),
+                              Image.asset(
+                                'assets/images/tag1.png',
+                                width: 100,
+                              ),
                               const Text(
                                 'Tag-4',
                                 style: TextStyle(
@@ -112,7 +124,10 @@ class ReaderTagConfigurationScreen extends StatelessWidget {
                         child: Card(
                           child: Column(
                             children: [
-                              Image.asset('assets/images/tag1.png'),
+                              Image.asset(
+                                'assets/images/tag1.png',
+                                width: 100,
+                              ),
                               const Text(
                                 'Tag-5',
                                 style: TextStyle(
@@ -128,7 +143,10 @@ class ReaderTagConfigurationScreen extends StatelessWidget {
                         child: Card(
                           child: Column(
                             children: [
-                              Image.asset('assets/images/tag1.png'),
+                              Image.asset(
+                                'assets/images/tag1.png',
+                                width: 100,
+                              ),
                               const Text(
                                 'Tag-6',
                                 style: TextStyle(
