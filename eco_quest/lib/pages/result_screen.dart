@@ -14,7 +14,7 @@ class ResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Results'),
+        title: const Text('Results'),
       ),
       body: Center(
         child: Column(

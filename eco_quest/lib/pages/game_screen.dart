@@ -122,7 +122,7 @@ class _GameScreenState extends State<GameScreen> {
                                                 backgroundColor:
                                                     Colors.amberAccent),
                                             onPressed: () {
-                                              Navigator.push(
+                                              Navigator.pushReplacement(
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) =>

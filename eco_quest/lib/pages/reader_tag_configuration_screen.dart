@@ -60,7 +60,7 @@ class ReaderTagConfigurationScreen extends StatelessWidget {
                           child: Column(
                             children: [
                               Image.asset(
-                                'assets/images/tag1.png',
+                                'assets/images/tag2.png',
                                 width: 100,
                               ),
                               const Text(
@@ -106,7 +106,7 @@ class ReaderTagConfigurationScreen extends StatelessWidget {
                           child: Column(
                             children: [
                               Image.asset(
-                                'assets/images/tag1.png',
+                                'assets/images/tag2.png',
                                 width: 100,
                               ),
                               const Text(
@@ -144,7 +144,7 @@ class ReaderTagConfigurationScreen extends StatelessWidget {
                           child: Column(
                             children: [
                               Image.asset(
-                                'assets/images/tag1.png',
+                                'assets/images/tag2.png',
                                 width: 100,
                               ),
                               const Text(

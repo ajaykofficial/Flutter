@@ -71,7 +71,7 @@ class SettingsScreen extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (BuildContext context) =>
-                                  BinReaderConfigurationScreen()));
+                                  const BinReaderConfigurationScreen()));
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.lightBlueAccent,
@@ -95,7 +95,7 @@ class SettingsScreen extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (BuildContext context) =>
-                                  ReaderTagConfigurationScreen()));
+                                  const ReaderTagConfigurationScreen()));
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.redAccent,
@@ -119,7 +119,7 @@ class SettingsScreen extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (BuildContext context) =>
-                                  TagWasteConfigurationScreen()));
+                                  const TagWasteConfigurationScreen()));
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.greenAccent,

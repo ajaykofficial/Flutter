@@ -33,8 +33,8 @@ class TagWasteConfigurationScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                    width: 200,
-                    height: 200,
+                    width: 190,
+                    height: 190,
                     child: Card(
                       child: Column(
                         children: [
@@ -62,8 +62,8 @@ class TagWasteConfigurationScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    width: 200,
-                    height: 200,
+                    width: 190,
+                    height: 190,
                     child: Card(
                       child: Column(
                         children: [
@@ -96,8 +96,8 @@ class TagWasteConfigurationScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                    width: 200,
-                    height: 200,
+                    width: 190,
+                    height: 190,
                     child: Card(
                       child: Column(
                         children: [
@@ -159,8 +159,8 @@ class TagWasteConfigurationScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                    width: 200,
-                    height: 200,
+                    width: 190,
+                    height: 190,
                     child: Card(
                       child: Column(
                         children: [
