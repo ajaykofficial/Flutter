@@ -1,16 +1,17 @@
 import 'package:eco_quest/pages/player_selection_screen.dart';
+import 'package:eco_quest/pages/scanning_screen.dart'; // Import ScanningScreen
 import 'package:eco_quest/pages/settings_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Home Sceen',
+          'Home Screen',
           style: TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.bold,
@@ -20,6 +21,20 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: const Color.fromRGBO(252, 216, 116, 1),
         centerTitle: true,
         elevation: 0,
+        actions: [
+          IconButton(
+            color: Colors.black,
+            iconSize: 30,
+            icon: const Icon(Icons.bluetooth),
+            onPressed: () {
+              // Navigate to scanning screen when Bluetooth icon is clicked
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ScanningScreen()),
+              );
+            },
+          ),
+        ],
       ),
       body: Stack(
         children: [
@@ -47,19 +62,23 @@ class HomeScreen extends StatelessWidget {
             bottom: 290,
             left: 45,
             child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const PlayerSelection()));
-                },
-                child: const Text(
-                  'Play',
-                  style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Norican-Regular'),
-                )),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PlayerSelection(),
+                  ),
+                );
+              },
+              child: const Text(
+                'Play',
+                style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Norican-Regular',
+                ),
+              ),
+            ),
           ),
           Positioned(
             height: 70,
@@ -69,17 +88,19 @@ class HomeScreen extends StatelessWidget {
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SettingsScreen(),
-                    ));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SettingsScreen(),
+                  ),
+                );
               },
               child: const Text(
                 'Settings',
                 style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Norican-Regular'),
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Norican-Regular',
+                ),
               ),
             ),
           ),
@@ -89,17 +110,17 @@ class HomeScreen extends StatelessWidget {
             bottom: 80,
             left: 45,
             child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    // backgroundColor: Colors.lightBlue,
-                    ), // button color
-                onPressed: () {},
-                child: const Text(
-                  'Result',
-                  style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Norican-Regular'),
-                )),
+              style: ElevatedButton.styleFrom(), // button color
+              onPressed: () {},
+              child: const Text(
+                'Result',
+                style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Norican-Regular',
+                ),
+              ),
+            ),
           ),
         ],
       ),

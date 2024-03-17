@@ -97,47 +97,78 @@ class _GameScreenState extends State<GameScreen> {
                                 showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: const Center(
-                                        child: Text(
-                                          'Level Complete!',
-                                          style: TextStyle(
-                                              fontSize: 25,
-                                              fontWeight: FontWeight.bold),
-                                        ),
+                                    return Dialog(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
                                       ),
-                                      content: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          const Text(
-                                            'Congratulations!',
-                                            style: TextStyle(
-                                                fontSize: 30,
-                                                fontWeight: FontWeight.bold),
+                                      child: Container(
+                                        padding: const EdgeInsets.all(30.0),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20.0),
+                                          gradient: const LinearGradient(
+                                            begin: Alignment.topCenter,
+                                            end: Alignment.bottomCenter,
+                                            colors: [
+                                              Colors.white,
+                                              Colors.lightBlueAccent,
+                                            ],
                                           ),
-                                          const SizedBox(height: 20),
-                                          ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                                elevation: 5,
+                                        ),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            const Text(
+                                              'Level Complete!',
+                                              style: TextStyle(
+                                                fontSize: 28,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            const SizedBox(height: 20),
+                                            const Text(
+                                              'Congratulations!',
+                                              style: TextStyle(
+                                                  fontSize: 24,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            const SizedBox(height: 30),
+                                            ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 12,
+                                                        horizontal: 30),
                                                 backgroundColor:
-                                                    Colors.amberAccent),
-                                            onPressed: () {
-                                              Navigator.pushReplacement(
+                                                    Colors.amberAccent,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                Navigator.pushReplacement(
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) =>
                                                         const LevelScreen(),
-                                                  ));
-                                            },
-                                            child: const Text(
-                                              'Go To Next Level',
-                                              style: TextStyle(
-                                                  color: Colors.black,
+                                                  ),
+                                                );
+                                              },
+                                              child: const Text(
+                                                'Go To Next Level',
+                                                style: TextStyle(
                                                   fontSize: 20,
-                                                  fontWeight: FontWeight.bold),
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     );
                                   },
