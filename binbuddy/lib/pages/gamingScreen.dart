@@ -1,7 +1,9 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:lottie/lottie.dart';
+import 'package:binbuddy/pages/playerList.dart';
 
 class GamingScreen extends StatefulWidget {
   final int level;
@@ -20,6 +22,9 @@ class GamingScreen extends StatefulWidget {
 class _GamingScreenState extends State<GamingScreen> {
   BluetoothCharacteristic? notificationCharacteristic;
   int droppedWasteCount = 0;
+  int tagsRead = 0; // To track the number of tags read
+
+  late final AudioPlayer _audioPlayer;
 
   final List<Map<String, String>> wasteImages = [
     {"path": "assets/images/apple_waste.png", "category": "biowaste"},
@@ -42,7 +47,8 @@ class _GamingScreenState extends State<GamingScreen> {
   @override
   void initState() {
     super.initState();
-    _discoverServices();
+    _audioPlayer = AudioPlayer();
+    _discoverServices(); // Discover Bluetooth services
   }
 
   Future<void> _discoverServices() async {
@@ -57,7 +63,7 @@ class _GamingScreenState extends State<GamingScreen> {
             // Enable notifications to receive data from the ESP32
             await notificationCharacteristic!.setNotifyValue(true);
 
-            // Handle incoming data and show appropriate dialogs
+            // Handle incoming data
             notificationCharacteristic!.lastValueStream.listen((data) {
               final message = String.fromCharCodes(data);
               _handleReceivedData(message);
@@ -71,13 +77,32 @@ class _GamingScreenState extends State<GamingScreen> {
   }
 
   void _handleReceivedData(String message) {
-    if (message.contains("Correctly sorted")) {
-      _showCorrectDialog(context);
-    } else if (message.contains("Incorrectly sorted")) {
-      _showWrongDialog(context);
-    } else {
-      print("Unexpected message: $message");
+    if (message.isEmpty) {
+      print("Received empty message");
+      return;
     }
+
+    tagsRead++; // Increment tagsRead for every valid sorting attempt
+
+    if (message.contains("Correctly sorted")) {
+      _showCorrectDialog(context); // Show correct sorting dialog
+    } else if (message.contains("Incorrectly sorted")) {
+      _showWrongDialog(context); // Show incorrect sorting dialog
+    }
+
+    if (tagsRead == widget.level) {
+      // Show level completion dialog when all tags are read
+      _showAllWasteDroppedDialog(context);
+    }
+  }
+
+  @override
+  void dispose() {
+    if (notificationCharacteristic != null) {
+      notificationCharacteristic!.setNotifyValue(false); // Stop notifications
+    }
+    _audioPlayer.dispose(); // Release audio resources
+    super.dispose();
   }
 
   @override
@@ -114,36 +139,33 @@ class _GamingScreenState extends State<GamingScreen> {
   }
 
   List<Widget> _buildRandomWasteImages(
-    BuildContext context,
-    List<Map<String, String>> wasteImages,
-  ) {
+      BuildContext context, List<Map<String, String>> wasteImages) {
     List<Widget> widgets = [];
     final random = Random();
     List<Rect> occupiedRects = [];
 
     for (var image in wasteImages) {
-      double left = 0.0, top = 0.0;
+      double left =
+          random.nextDouble() * (MediaQuery.of(context).size.width - 130);
+      double top =
+          random.nextDouble() * (MediaQuery.of(context).size.height - 130);
+
+      // Ensure no overlap between images
       bool isOverlapping = true;
-
       while (isOverlapping) {
-        left = random.nextDouble() * (MediaQuery.of(context).size.width - 130);
-        top = random.nextDouble() * (MediaQuery.of(context).size.height - 130);
-
         Rect newRect = Rect.fromLTWH(left, top, 130, 130);
-        bool isColliding = false;
-        for (Rect rect in occupiedRects) {
-          if (newRect.overlaps(rect)) {
-            isColliding = true;
-            break;
-          }
-        }
+        isOverlapping = occupiedRects.any((rect) => rect.overlaps(newRect));
 
-        if (!isColliding) {
-          isOverlapping = false;
+        if (isOverlapping) {
+          left =
+              random.nextDouble() * (MediaQuery.of(context).size.width - 130);
+          top =
+              random.nextDouble() * (MediaQuery.of(context).size.height - 130);
+        } else {
+          occupiedRects.add(newRect);
         }
       }
 
-      occupiedRects.add(Rect.fromLTWH(left, top, 130, 130));
       widgets.add(
         Positioned(
           left: left,
@@ -183,9 +205,9 @@ class _GamingScreenState extends State<GamingScreen> {
       return DragTarget(
         onAccept: (data) {
           if (data == image["category"]) {
-            _showCorrectDialog(context);
+            _showCorrectDialog(context); // Show correct sorting dialog
           } else {
-            _showWrongDialog(context);
+            _showWrongDialog(context); // Show incorrect sorting dialog
           }
         },
         builder: (context, candidateData, rejectedData) {
@@ -200,6 +222,10 @@ class _GamingScreenState extends State<GamingScreen> {
   }
 
   void _showCorrectDialog(BuildContext context) {
+    _audioPlayer.setAsset('assets/audios/correct.mp3').then((_) {
+      _audioPlayer.play(); // Play correct sound
+    });
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -234,6 +260,10 @@ class _GamingScreenState extends State<GamingScreen> {
   }
 
   void _showWrongDialog(BuildContext context) {
+    _audioPlayer.setAsset('assets/audios/incorrect.mp3').then((_) {
+      _audioPlayer.play(); // Play incorrect sound
+    });
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -268,11 +298,15 @@ class _GamingScreenState extends State<GamingScreen> {
   }
 
   void _showAllWasteDroppedDialog(BuildContext context) {
+    _audioPlayer.setAsset('assets/audios/levelcomplete.mp3').then((_) {
+      _audioPlayer.play(); // Play level completion sound
+    });
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.lightBlueAccent,
           contentPadding: EdgeInsets.zero,
           content: Column(
             mainAxisSize: MainAxisSize.min,
@@ -291,7 +325,16 @@ class _GamingScreenState extends State<GamingScreen> {
                 ),
               ),
               ElevatedButton(
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          const PlayerSelectionScreen(),
+                    ),
+                    (route) => route.isFirst,
+                  );
+                },
                 child: const Text("OK"),
               ),
             ],
