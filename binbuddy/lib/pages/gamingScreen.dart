@@ -1,9 +1,9 @@
 import 'dart:math';
+import 'package:binbuddy/pages/result_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lottie/lottie.dart';
-import 'package:binbuddy/pages/playerList.dart';
 
 class GamingScreen extends StatefulWidget {
   final int level;
@@ -23,6 +23,9 @@ class _GamingScreenState extends State<GamingScreen> {
   BluetoothCharacteristic? notificationCharacteristic;
   int droppedWasteCount = 0;
   int tagsRead = 0; // To track the number of tags read
+  int correctlySortedCount = 0;
+  int incorrectlySortedCount = 0;
+  int levelCount = 0;
 
   late final AudioPlayer _audioPlayer;
 
@@ -86,13 +89,16 @@ class _GamingScreenState extends State<GamingScreen> {
 
     if (message.contains("Correctly sorted")) {
       _showCorrectDialog(context); // Show correct sorting dialog
+      correctlySortedCount++;
     } else if (message.contains("Incorrectly sorted")) {
       _showWrongDialog(context); // Show incorrect sorting dialog
+      incorrectlySortedCount++;
     }
 
     if (tagsRead == widget.level) {
       // Show level completion dialog when all tags are read
       _showAllWasteDroppedDialog(context);
+      levelCount = widget.level;
     }
   }
 
@@ -329,8 +335,11 @@ class _GamingScreenState extends State<GamingScreen> {
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          const PlayerSelectionScreen(),
+                      builder: (BuildContext context) => ResultsScreen(
+                        correctSorts: correctlySortedCount,
+                        incorrectSorts: incorrectlySortedCount,
+                        level: levelCount,
+                      ),
                     ),
                     (route) => route.isFirst,
                   );
