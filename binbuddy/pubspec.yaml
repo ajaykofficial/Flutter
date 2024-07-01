@@ -45,6 +45,7 @@ dependencies:
   gif: ^2.3.0
   audioplayers: ^5.2.1
   just_audio: ^0.9.37
+  provider: ^6.1.2
 
 dev_dependencies:
   flutter_test:

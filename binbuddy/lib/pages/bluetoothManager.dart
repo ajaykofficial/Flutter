@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 
-class BluetoothManager {
+class BluetoothManager extends ChangeNotifier {
   static final BluetoothManager _instance = BluetoothManager._internal();
 
   factory BluetoothManager() {
@@ -9,7 +10,6 @@ class BluetoothManager {
 
   BluetoothManager._internal();
 
-  final FlutterBluePlus _flutterBlue = FlutterBluePlus();
   BluetoothDevice? _connectedDevice;
 
   BluetoothDevice? get connectedDevice => _connectedDevice;
@@ -18,6 +18,7 @@ class BluetoothManager {
     try {
       await device.connect();
       _connectedDevice = device;
+      notifyListeners(); // Notify listeners about the connection state change
     } catch (e) {
       print("Error connecting to device: $e");
     }
@@ -27,6 +28,7 @@ class BluetoothManager {
     if (_connectedDevice != null) {
       await _connectedDevice!.disconnect();
       _connectedDevice = null;
+      notifyListeners(); // Notify listeners about the connection state change
     }
   }
 
