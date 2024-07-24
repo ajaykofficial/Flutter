@@ -185,7 +185,7 @@ class BluetoothDevices extends StatelessWidget {
       model.handleDisconnection(device);
       model.connectedDevice = device;
     } catch (e) {
-      print('Failed to connect: $e');
+      // print('Failed to connect: $e');
     }
   }
 
@@ -201,7 +201,7 @@ class BluetoothDevices extends StatelessWidget {
       );
       model.connectedDevice = null;
     } catch (e) {
-      print('Failed to disconnect: $e');
+      // print('Failed to disconnect: $e');
     }
   }
 }
@@ -238,7 +238,7 @@ class BluetoothDevicesModel extends ChangeNotifier {
 
     if (!allGranted) {
       _showPermissionDeniedDialog(context);
-      print('Not all permissions are granted');
+      // print('Not all permissions are granted');
     }
     return allGranted;
   }
@@ -248,7 +248,7 @@ class BluetoothDevicesModel extends ChangeNotifier {
         await FlutterBluePlus.adapterState.first == BluetoothAdapterState.on;
     if (!isOn) {
       _showBluetoothDisabledDialog(context);
-      print('Bluetooth is not enabled');
+      // print('Bluetooth is not enabled');
     }
     return isOn;
   }
@@ -271,7 +271,7 @@ class BluetoothDevicesModel extends ChangeNotifier {
       await Future.delayed(const Duration(seconds: 4));
       await FlutterBluePlus.stopScan();
     } catch (e) {
-      print('An error occurred while scanning: $e');
+      // print('An error occurred while scanning: $e');
     } finally {
       await scanResultsSubscription
           .cancel(); // Cancel the subscription to avoid memory leaks
@@ -286,22 +286,22 @@ class BluetoothDevicesModel extends ChangeNotifier {
 
   void _attemptReconnect(BluetoothDevice device, int attempt, Duration delay) {
     if (attempt >= maxRetries) {
-      print('Max retry limit reached. Stopping reconnection attempts.');
+      // print('Max retry limit reached. Stopping reconnection attempts.');
       return;
     }
 
     device.connectionState.listen((state) async {
       if (state == BluetoothConnectionState.disconnected) {
-        print('${device.platformName} got disconnected');
+        // print('${device.platformName} got disconnected');
         // Attempt to reconnect after a delay
         await Future.delayed(delay);
         try {
           await device.connect();
-          print('Reconnected to ${device.platformName}');
+          // print('Reconnected to ${device.platformName}');
           connectedDevice = device;
           notifyListeners();
         } catch (e) {
-          print('Failed to reconnect: $e');
+          // print('Failed to reconnect: $e');
           // Increase the delay for the next attempt
           _attemptReconnect(device, attempt + 1, delay * 2);
         }

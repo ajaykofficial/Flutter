@@ -90,13 +90,13 @@ class _GamingScreenState extends State<GamingScreen> {
         }
       }
     } catch (e) {
-      print("Error discovering services: $e");
+      // print("Error discovering services: $e");
     }
   }
 
   void _handleReceivedData(String message) {
     if (message.isEmpty) {
-      print("Received empty message");
+      // print("Received empty message");
       return;
     }
 
@@ -110,7 +110,7 @@ class _GamingScreenState extends State<GamingScreen> {
       if (message.contains("Correctly sorted")) {
         _showCorrectDialog(context); // Show correct sorting dialog
         correctlySortedCount++;
-        print(message);
+        // print(message);
         tagsRead++;
       } else if (message.contains("Incorrectly sorted")) {
         _showWrongDialog(context); // Show incorrect sorting dialog
