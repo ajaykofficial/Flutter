@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:binbuddy/pages/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -41,12 +40,7 @@ class _SplashScreenState extends State<SplashScreen>
     _animationController.forward();
 
     Timer(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
-        ),
-      );
+      Navigator.popAndPushNamed(context, 'homeScreen');
     });
   }
 

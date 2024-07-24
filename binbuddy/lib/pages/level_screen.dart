@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:lottie/lottie.dart';
-import 'package:binbuddy/pages/gamingScreen.dart';
 
 class LevelScreen extends StatelessWidget {
-  final BluetoothDevice connectedDevice;
   final int unlockedLevels;
 
   const LevelScreen({
     Key? key,
-    required this.connectedDevice,
     this.unlockedLevels = 5,
   }) : super(key: key);
 
@@ -80,7 +76,6 @@ class LevelScreen extends StatelessWidget {
                 ],
               ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   IconButton(
                     icon: const Icon(Icons.arrow_back, color: Colors.black),
@@ -88,7 +83,7 @@ class LevelScreen extends StatelessWidget {
                       Navigator.pop(context);
                     },
                   ),
-                  const SizedBox(width: 70),
+                  const Spacer(),
                   const Text(
                     'Select Level',
                     style: TextStyle(
@@ -97,6 +92,9 @@ class LevelScreen extends StatelessWidget {
                       color: Colors.black,
                       fontFamily: 'Norican-Regular',
                     ),
+                  ),
+                  const SizedBox(
+                    width: 100,
                   ),
                 ],
               ),
@@ -124,29 +122,15 @@ class LevelScreen extends StatelessWidget {
         return GestureDetector(
           onTap: () {
             if (isLevelUnlocked) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => GamingScreen(
-                    level: index + 1,
-                    connectedDevice: connectedDevice,
-                  ),
-                ),
-              );
+              Navigator.pushNamed(context, 'gameScreen', arguments: index + 1);
             } else {
               _showLockedLevelDialog(context);
             }
           },
           child: Card(
-            // color: isLevelUnlocked
-            //     ? Colors.white.withOpacity(0.7)
-            //     : Colors.grey.withOpacity(0.7),
             elevation: 4.0,
-            clipBehavior: Clip.none,
             child: Image.asset(
               levelImages[index],
-              // color: isLevelUnlocked ? null : Colors.grey,
-              // colorBlendMode: isLevelUnlocked ? null : BlendMode.saturation,
             ),
           ),
         );

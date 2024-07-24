@@ -1,18 +1,15 @@
 import 'dart:math';
-import 'package:binbuddy/pages/result_screen.dart';
+import 'package:binbuddy/pages/player_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lottie/lottie.dart';
 
-class GamingScreen extends StatefulWidget {
-  final int level;
-  final BluetoothDevice connectedDevice;
+late int level;
 
+class GamingScreen extends StatefulWidget {
   const GamingScreen({
     Key? key,
-    required this.level,
-    required this.connectedDevice,
   }) : super(key: key);
 
   @override
@@ -26,6 +23,10 @@ class _GamingScreenState extends State<GamingScreen> {
   int correctlySortedCount = 0;
   int incorrectlySortedCount = 0;
   int levelCount = 0;
+  String lastTag = '';
+  bool _flag = true;
+  BuildContext?
+      _dialogContext; // Variable to keep track of the current dialog context
 
   late final AudioPlayer _audioPlayer;
 
@@ -36,11 +37,23 @@ class _GamingScreenState extends State<GamingScreen> {
       "path": "assets/images/plastic_bottle_waste.png",
       "category": "plasticwaste",
     },
+    {"path": "assets/images/apple_waste.png", "category": "biowaste"},
+    {"path": "assets/images/ewaste_computer.png", "category": "ewaste"},
+    {
+      "path": "assets/images/plastic_bottle_waste.png",
+      "category": "plasticwaste",
+    },
+    {"path": "assets/images/apple_waste.png", "category": "biowaste"},
+    {"path": "assets/images/ewaste_computer.png", "category": "ewaste"},
+    {
+      "path": "assets/images/plastic_bottle_waste.png",
+      "category": "plasticwaste",
+    },
   ];
 
   final List<Map<String, String>> binImages = [
     {"path": "assets/images/reader_biowaste_bin.png", "category": "biowaste"},
-    {"path": "assets/images/reader_ewaste_bin.png", "category": "ewaste"},
+    // {"path": "assets/images/reader_ewaste_bin.png", "category": "ewaste"},
     {
       "path": "assets/images/reader_plasticwaste_bin.png",
       "category": "plasticwaste",
@@ -56,7 +69,8 @@ class _GamingScreenState extends State<GamingScreen> {
 
   Future<void> _discoverServices() async {
     try {
-      final services = await widget.connectedDevice.discoverServices();
+      final connectedDevice = FlutterBluePlus.connectedDevices.first;
+      final services = await connectedDevice.discoverServices();
       for (var service in services) {
         for (var characteristic in service.characteristics) {
           if (characteristic.uuid.toString() ==
@@ -68,7 +82,8 @@ class _GamingScreenState extends State<GamingScreen> {
 
             // Handle incoming data
             notificationCharacteristic!.lastValueStream.listen((data) {
-              final message = String.fromCharCodes(data);
+              String message = "";
+              message = String.fromCharCodes(data);
               _handleReceivedData(message);
             });
           }
@@ -85,20 +100,33 @@ class _GamingScreenState extends State<GamingScreen> {
       return;
     }
 
-    tagsRead++; // Increment tagsRead for every valid sorting attempt
-
-    if (message.contains("Correctly sorted")) {
-      _showCorrectDialog(context); // Show correct sorting dialog
-      correctlySortedCount++;
-    } else if (message.contains("Incorrectly sorted")) {
-      _showWrongDialog(context); // Show incorrect sorting dialog
-      incorrectlySortedCount++;
+    final id = message.split(',')[0];
+    if (id != lastTag) {
+      lastTag = id;
+    } else if (id == lastTag) {
+      return;
     }
-
-    if (tagsRead == widget.level) {
-      // Show level completion dialog when all tags are read
-      _showAllWasteDroppedDialog(context);
-      levelCount = widget.level;
+    if (_flag) {
+      if (message.contains("Correctly sorted")) {
+        _showCorrectDialog(context); // Show correct sorting dialog
+        correctlySortedCount++;
+        print(message);
+        tagsRead++;
+      } else if (message.contains("Incorrectly sorted")) {
+        _showWrongDialog(context); // Show incorrect sorting dialog
+        incorrectlySortedCount++;
+        tagsRead++;
+      }
+      // print(
+      // "$tagsRead............................"); // Increment tagsRead for every valid sorting attempt
+      if (tagsRead == level) {
+        setState(() {
+          _flag = false;
+        });
+        // Show level completion dialog when all tags are read
+        _showAllWasteDroppedDialog(context);
+        levelCount = level;
+      }
     }
   }
 
@@ -113,8 +141,11 @@ class _GamingScreenState extends State<GamingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String levels = ModalRoute.of(context)!.settings.arguments.toString();
+    level = int.parse(levels);
+
     List<Map<String, String>> levelWasteImages =
-        wasteImages.take(widget.level).toList();
+        wasteImages.take(level).toList();
 
     return Scaffold(
       backgroundColor: Colors.greenAccent.withOpacity(0.5),
@@ -219,8 +250,8 @@ class _GamingScreenState extends State<GamingScreen> {
         builder: (context, candidateData, rejectedData) {
           return Image.asset(
             image["path"]!,
-            width: 125,
-            height: 125,
+            width: 180,
+            height: 180,
           );
         },
       );
@@ -228,13 +259,17 @@ class _GamingScreenState extends State<GamingScreen> {
   }
 
   void _showCorrectDialog(BuildContext context) {
-    _audioPlayer.setAsset('assets/audios/correct.mp3').then((_) {
+    _dismissCurrentDialog(); // Dismiss current dialog if any
+    _audioPlayer
+        .setAsset('assets/audios/congratulations_malayalam.mp3')
+        .then((_) {
       _audioPlayer.play(); // Play correct sound
     });
 
     showDialog(
       context: context,
       builder: (BuildContext context) {
+        _dialogContext = context; // Save the context of the current dialog
         return AlertDialog(
           backgroundColor: Colors.lightGreenAccent,
           contentPadding: EdgeInsets.zero,
@@ -247,7 +282,7 @@ class _GamingScreenState extends State<GamingScreen> {
                 width: 200,
               ),
               const Text(
-                'Correctly sorted!',
+                'Well Done🤩!',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -255,7 +290,11 @@ class _GamingScreenState extends State<GamingScreen> {
                 ),
               ),
               ElevatedButton(
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _dialogContext =
+                      null; // Reset the context after dismissing the dialog
+                },
                 child: const Text("OK"),
               ),
             ],
@@ -266,13 +305,15 @@ class _GamingScreenState extends State<GamingScreen> {
   }
 
   void _showWrongDialog(BuildContext context) {
-    _audioPlayer.setAsset('assets/audios/incorrect.mp3').then((_) {
+    _dismissCurrentDialog(); // Dismiss current dialog if any
+    _audioPlayer.setAsset('assets/audios/try_again_malayalam.mp3').then((_) {
       _audioPlayer.play(); // Play incorrect sound
     });
 
     showDialog(
       context: context,
       builder: (BuildContext context) {
+        _dialogContext = context; // Save the context of the current dialog
         return AlertDialog(
           backgroundColor: Colors.redAccent,
           contentPadding: EdgeInsets.zero,
@@ -285,16 +326,26 @@ class _GamingScreenState extends State<GamingScreen> {
                 width: 200,
               ),
               const Text(
-                'Incorrectly sorted!',
+                'Try Again😊',
                 style: TextStyle(
-                  fontSize: 24,
+                  fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  color: Colors.white,
                 ),
               ),
+              const SizedBox(
+                height: 20,
+              ),
               ElevatedButton(
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _dialogContext =
+                      null; // Reset the context after dismissing the dialog
+                },
                 child: const Text("OK"),
+              ),
+              const SizedBox(
+                height: 10,
               ),
             ],
           ),
@@ -304,13 +355,17 @@ class _GamingScreenState extends State<GamingScreen> {
   }
 
   void _showAllWasteDroppedDialog(BuildContext context) {
-    _audioPlayer.setAsset('assets/audios/levelcomplete.mp3').then((_) {
+    _dismissCurrentDialog(); // Dismiss current dialog if any
+    _audioPlayer
+        .setAsset('assets/audios/level_complete_malayalam.mp3')
+        .then((_) {
       _audioPlayer.play(); // Play level completion sound
     });
 
     showDialog(
       context: context,
       builder: (BuildContext context) {
+        _dialogContext = context; // Save the context of the current dialog
         return AlertDialog(
           backgroundColor: Colors.lightBlueAccent,
           contentPadding: EdgeInsets.zero,
@@ -327,22 +382,22 @@ class _GamingScreenState extends State<GamingScreen> {
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  color: Colors.green,
+                  color: Colors.white,
                 ),
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushAndRemoveUntil(
+                  lastTag = "";
+                  // Navigator.popAndPushNamed(context, 'playerList');
+                  Navigator.pushAndRemoveUntil<void>(
                     context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => ResultsScreen(
-                        correctSorts: correctlySortedCount,
-                        incorrectSorts: incorrectlySortedCount,
-                        level: levelCount,
-                      ),
-                    ),
-                    (route) => route.isFirst,
+                    MaterialPageRoute<void>(
+                        builder: (BuildContext context) =>
+                            const PlayerSelectionScreen()),
+                    ModalRoute.withName('playerList'),
                   );
+                  _dialogContext =
+                      null; // Reset the context after dismissing the dialog
                 },
                 child: const Text("OK"),
               ),
@@ -351,5 +406,13 @@ class _GamingScreenState extends State<GamingScreen> {
         );
       },
     );
+  }
+
+// Method to dismiss the current dialog if any
+  void _dismissCurrentDialog() {
+    if (_dialogContext != null) {
+      Navigator.of(_dialogContext!).pop();
+      _dialogContext = null;
+    }
   }
 }

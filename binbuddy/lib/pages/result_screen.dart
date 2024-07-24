@@ -1,4 +1,3 @@
-import 'package:binbuddy/pages/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class ResultsScreen extends StatelessWidget {
@@ -114,13 +113,7 @@ class ResultsScreen extends StatelessWidget {
         children: [
           ElevatedButton(
             onPressed: () {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) => const HomeScreen(),
-                ),
-                (route) => route.isFirst,
-              );
+              Navigator.pushNamed(context, 'homeScreen');
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.redAccent, // Color styling
@@ -132,13 +125,7 @@ class ResultsScreen extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) => const HomeScreen(),
-                ),
-                (route) => route.isFirst,
-              );
+              Navigator.pushNamed(context, 'levelScreen');
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.green, // Color styling

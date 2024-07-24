@@ -1,7 +1,7 @@
-import 'package:binbuddy/pages/levelScreen.dart';
+import 'package:binbuddy/pages/bluetooth_scanner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
-import 'package:binbuddy/pages/bluetoothScanner.dart';
+import 'package:provider/provider.dart';
 
 class PlayerSelectionScreen extends StatefulWidget {
   const PlayerSelectionScreen({Key? key}) : super(key: key);
@@ -13,15 +13,16 @@ class PlayerSelectionScreen extends StatefulWidget {
 class _PlayerSelectionScreenState extends State<PlayerSelectionScreen> {
   String _selectedPlayerName = '';
   String _selectedPlayerImagePath = '';
-  BluetoothDevice?
-      connectedDevice; // Nullable BluetoothDevice to manage connection
 
   @override
   Widget build(BuildContext context) {
+    final model = Provider.of<BluetoothDevicesModel>(context);
+    final connectedDevice = model.connectedDevice;
+
     return Scaffold(
       body: Stack(
         children: [
-          _buildBackgroundImage(), // Updated background image
+          _buildBackgroundImage(),
           Positioned(
             top: 40,
             left: 10,
@@ -38,11 +39,17 @@ class _PlayerSelectionScreenState extends State<PlayerSelectionScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  _buildPlayerAvatar(), // Custom player avatar
+                  _buildPlayerAvatar(),
                   Expanded(
-                      child:
-                          _buildPlayerList()), // Player list with updated design
-                  _buildStartGameButton(context), // Updated start game button
+                      child: Container(
+                          padding: const EdgeInsets.all(8.0),
+                          decoration: BoxDecoration(
+                              // image: const DecorationImage(
+                              //     image: AssetImage('assets/images/scbg.jpg',)),
+                              color: Colors.black.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(30)),
+                          child: _buildPlayerList())),
+                  _buildStartGameButton(context, connectedDevice),
                 ],
               ),
             ),
@@ -54,7 +61,7 @@ class _PlayerSelectionScreenState extends State<PlayerSelectionScreen> {
 
   Widget _buildBackgroundImage() {
     return Image.asset(
-      'assets/images/scbg.jpg', // Updated background image
+      'assets/images/scbg.jpg',
       width: double.infinity,
       height: double.infinity,
       fit: BoxFit.cover,
@@ -66,7 +73,7 @@ class _PlayerSelectionScreenState extends State<PlayerSelectionScreen> {
       height: 80,
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [Colors.greenAccent, Colors.lightBlue], // Updated colors
+          colors: [Colors.greenAccent, Colors.lightBlue],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
         ),
@@ -92,23 +99,13 @@ class _PlayerSelectionScreenState extends State<PlayerSelectionScreen> {
               fontSize: 30,
               fontWeight: FontWeight.bold,
               color: Colors.black,
+              fontFamily: 'Norican-Regular',
             ),
           ),
           IconButton(
             icon: const Icon(Icons.bluetooth, color: Colors.black),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => BluetoothScanner(
-                    onDeviceSelected: (BluetoothDevice device) {
-                      setState(() {
-                        connectedDevice = device;
-                      });
-                    },
-                  ),
-                ),
-              );
+              Navigator.pushNamed(context, 'bluetoothDevices');
             },
           ),
         ],
@@ -121,67 +118,66 @@ class _PlayerSelectionScreenState extends State<PlayerSelectionScreen> {
       children: [
         CircleAvatar(
           radius: 70,
-          backgroundColor: Colors.greenAccent, // Updated color
+          backgroundColor: Colors.blueGrey.withOpacity(0.7),
           backgroundImage: AssetImage(
             _selectedPlayerImagePath.isNotEmpty
                 ? _selectedPlayerImagePath
-                : 'assets/images/avatar-image1.png', // Default avatar with eco-friendly theme
+                : 'assets/images/avatar-image1.png',
           ),
         ),
         const SizedBox(height: 10),
-        Text(
-          _selectedPlayerName.isNotEmpty
-              ? _selectedPlayerName
-              : 'Select Player',
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30),
+            color: Colors.white.withOpacity(0.7),
+          ),
+          child: Text(
+            _selectedPlayerName.isNotEmpty
+                ? _selectedPlayerName
+                : 'Select Player',
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
+        const SizedBox(
+          height: 10,
+        )
       ],
     );
   }
 
   Widget _buildPlayerList() {
+    final players = [
+      _createPlayerTile('Wilson Dokidis', 'assets/images/avatar-image2.png'),
+      _createPlayerTile('Haylie Torff', 'assets/images/avatar-image3.png'),
+      _createPlayerTile('Ethan James', 'assets/images/avatar-image1.png'),
+      _createPlayerTile('James Oliver', 'assets/images/avatar-image4.png'),
+      _createPlayerTile('Liam Alexander', 'assets/images/avatar-image7.png'),
+      _createPlayerTile('Olivia Rose', 'assets/images/avatar-image6.png'),
+      _createPlayerTile('Noah Benjamin', 'assets/images/avatar-image5.png'),
+      _createPlayerTile('Sophia Marie', 'assets/images/avatar-image8.png'),
+      _createPlayerTile('James Oliver', 'assets/images/avatar-image10.png'),
+      _createPlayerTile('Ava Elizabeth', 'assets/images/avatar-image9.png'),
+    ];
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          _createPlayerTile(
-              'Wilson Dokidis', 'assets/images/avatar-image2.png'),
-          _createPlayerTile('Haylie Torff', 'assets/images/avatar-image3.png'),
-          _createPlayerTile(
-              'Wilson Dokidis', 'assets/images/avatar-image2.png'),
-          _createPlayerTile('Haylie Torff', 'assets/images/avatar-image3.png'),
-          _createPlayerTile(
-              'Wilson Dokidis', 'assets/images/avatar-image2.png'),
-          _createPlayerTile('Haylie Torff', 'assets/images/avatar-image3.png'),
-          _createPlayerTile(
-              'Wilson Dokidis', 'assets/images/avatar-image2.png'),
-          _createPlayerTile('Haylie Torff', 'assets/images/avatar-image3.png'),
-          _createPlayerTile(
-              'Wilson Dokidis', 'assets/images/avatar-image2.png'),
-          _createPlayerTile('Haylie Torff', 'assets/images/avatar-image3.png'),
-          // More player tiles with eco-friendly avatars
-        ],
+        children: players,
       ),
     );
   }
 
-  Widget _buildStartGameButton(BuildContext context) {
+  Widget _buildStartGameButton(
+      BuildContext context, BluetoothDevice? connectedDevice) {
     return ElevatedButton(
       onPressed: () {
         if (_selectedPlayerName.isNotEmpty && connectedDevice != null) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => LevelScreen(
-                connectedDevice: connectedDevice!,
-                // playerName: _selectedPlayerName,
-              ),
-            ),
-          );
+          Navigator.pushNamed(context, 'levelScreen');
         } else {
           String errorMsg = _selectedPlayerName.isEmpty
               ? 'Please select a player before starting the game.'
@@ -195,26 +191,24 @@ class _PlayerSelectionScreenState extends State<PlayerSelectionScreen> {
         }
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.green, // Updated start game button color
+        backgroundColor: Colors.green,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),
+        padding: const EdgeInsets.symmetric(vertical: 15),
       ),
-      child: const Padding(
-        padding: EdgeInsets.symmetric(vertical: 15),
-        child: Text(
-          'Start Game',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
+      child: const Text(
+        'Start Game',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );
   }
 
-  PlayerTile _createPlayerTile(String name, String imagePath) {
+  Widget _createPlayerTile(String name, String imagePath) {
     return PlayerTile(
       name: name,
       imagePath: imagePath,
@@ -243,24 +237,26 @@ class PlayerTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.white
-          .withOpacity(0.7), // Updated card opacity for a lighter look
+      color: Colors.white.withOpacity(0.7),
       elevation: 5,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(30),
       ),
       child: ListTile(
         leading: CircleAvatar(
-          radius: 25,
-          backgroundColor: Colors.green, // Updated player tile color
+          radius: 30,
+          backgroundColor: Colors.blueGrey.withOpacity(0.6),
           backgroundImage: AssetImage(imagePath),
         ),
-        title: Text(
-          name,
-          style: const TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
+        title: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Text(
+            name,
+            style: const TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
           ),
         ),
         onTap: onTap,
