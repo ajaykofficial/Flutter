@@ -1,3 +1,10 @@
+// import 'package:binbuddy/widgets/build_profile_avatar.dart';
+// import 'package:binbuddy/widgets/build_settings_button.dart';
+import 'package:binbuddy/widgets/HomeScreenWidgets/build_background.dart';
+import 'package:binbuddy/widgets/HomeScreenWidgets/build_highscore_button.dart';
+import 'package:binbuddy/widgets/HomeScreenWidgets/build_instructionsbutton.dart';
+import 'package:binbuddy/widgets/HomeScreenWidgets/build_playbutton.dart';
+import 'package:binbuddy/widgets/HomeScreenWidgets/build_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -43,69 +50,18 @@ class _HomeScreenState extends State<HomeScreen>
       child: Scaffold(
         body: Stack(
           children: [
-            _buildBackground(),
-            _buildTitle(),
-            _buildMainContent(context),
-            // _buildSettingsButton(),
-            // _buildProfileAvatar(),
+            const BuildBackground(),
+            const BuildTitle(),
+            buildMainContent(context),
+            // BuildSettingsButton(context: context),
+            // BuildProfileAvatar(context: context),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildBackground() {
-    return Stack(
-      children: [
-        Image.asset(
-          'assets/images/scbg.jpg',
-          width: double.infinity,
-          height: double.infinity,
-          fit: BoxFit.cover,
-          gaplessPlayback: true,
-        ),
-        Container(
-          color: Colors.black.withOpacity(0.1),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildTitle() {
-    return Positioned(
-      top: 40,
-      left: 20,
-      right: 20,
-      child: Container(
-        height: 80,
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [Colors.greenAccent, Colors.blueAccent],
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-          ),
-          borderRadius: BorderRadius.circular(30),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.3),
-              blurRadius: 10,
-              offset: const Offset(0, 5),
-            ),
-          ],
-        ),
-        child: const Center(
-          child: Text(
-            'Bin Buddy',
-            style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-                fontFamily: 'Norican-Regular'),
-          ),
-        ),
-      ),
-    );
-  }
+  Widget buildMainContent(BuildContext context) => _buildMainContent(context);
 
   Widget _buildMainContent(BuildContext context) {
     return Center(
@@ -119,114 +75,17 @@ class _HomeScreenState extends State<HomeScreen>
               onTap: () {
                 Navigator.pushNamed(context, 'playerList');
               },
-              child: _buildPlayButton(),
+              child: const BuildPlayButton(),
             ),
           ),
           const SizedBox(height: 30),
-          _buildInstructionsButton(),
+          BuildInstructionsButton(context: context),
           const SizedBox(height: 10),
-          _buildHighScoresButton(),
+          const BuildHighScoresButton(),
         ],
       ),
     );
   }
-
-  Widget _buildPlayButton() {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeInOut,
-      width: 200,
-      height: 200,
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Colors.redAccent, Colors.red],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.3),
-            blurRadius: 20,
-            spreadRadius: 5,
-          ),
-        ],
-      ),
-      child: const Center(
-        child: Icon(
-          Icons.play_circle_filled,
-          size: 80,
-          color: Colors.white,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildInstructionsButton() {
-    return ElevatedButton.icon(
-      onPressed: () {
-        Navigator.pushNamed(context, 'instructions');
-      },
-      icon: const Icon(Icons.help, color: Colors.black),
-      label: const Text('How to Play',
-          style: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20)),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.orangeAccent,
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-        textStyle: const TextStyle(fontSize: 20),
-      ),
-    );
-  }
-
-  Widget _buildHighScoresButton() {
-    return ElevatedButton.icon(
-      onPressed: () {
-        // Navigator.pushNamed(context, 'highScores');
-      },
-      icon: const Icon(
-        Icons.leaderboard,
-        color: Colors.black,
-      ),
-      label: const Text('High Scores',
-          style: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20)),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.blueAccent,
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-        textStyle: const TextStyle(fontSize: 20),
-      ),
-    );
-  }
-
-  // Widget _buildSettingsButton() {
-  //   return Positioned(
-  //     top: 50,
-  //     right: 30,
-  //     child: IconButton(
-  //       icon: const Icon(Icons.settings, color: Colors.white, size: 30),
-  //       onPressed: () {
-  //         Navigator.pushNamed(context, 'settings');
-  //       },
-  //     ),
-  //   );
-  // }
-
-  // Widget _buildProfileAvatar() {
-  //   return Positioned(
-  //     top: 50,
-  //     left: 30,
-  //     child: GestureDetector(
-  //       onTap: () {
-  //         Navigator.pushNamed(context, 'profile');
-  //       },
-  //       child: const CircleAvatar(
-  //         radius: 30,
-  //         backgroundImage: AssetImage('assets/images/avatar-image1.png'),
-  //       ),
-  //     ),
-  //   );
-  // }
 
   void _onWillPop(bool canPop) {
     showDialog(

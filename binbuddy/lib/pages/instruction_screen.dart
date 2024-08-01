@@ -1,3 +1,4 @@
+import 'package:binbuddy/widgets/InstructionPageWidget/build_Instructionstep.dart';
 import 'package:flutter/material.dart';
 
 class InstructionsPage extends StatelessWidget {
@@ -72,36 +73,36 @@ class InstructionsPage extends StatelessWidget {
               //   ),
               // ),
               // const SizedBox(height: 16.0),
-              _buildInstructionStep(
-                context,
-                'Level 1: Introduction to Waste Sorting',
-                'assets/images/level1.jpg',
-                'Let\'s start with one waste item. Pick up the item and find the bin that matches the category of the item. Place the item into the correct bin. Great job!',
-              ),
-              _buildInstructionStep(
-                context,
-                'Level 2: Two Waste Items',
-                'assets/images/level2.jpg',
-                'Now, we have two items. Look at each item carefully. Place each item into the correct bin. Remember to check the category of the bins. You can do it! Take your time and choose the right bin.',
-              ),
-              _buildInstructionStep(
-                context,
-                'Levels 3-5: Increasing Complexity',
-                'assets/images/level3.jpg',
-                'We have more items to sort now. Look at each item. Place each item into the correct bin based on its category. If you\'re unsure, look at the category on the bins to help you decide. Let\'s see how many you can get right! You\'re doing great!',
-              ),
-              _buildInstructionStep(
-                context,
-                'Using the Bins',
-                'assets/images/trash-bin.png',
-                'Approach the bin that you think is correct. Place the waste object into the bin with the matching category.',
-              ),
-              _buildInstructionStep(
-                context,
-                'Receiving Feedback',
-                'assets/images/binn1.png',
-                'Positive Feedback: Well done! You sorted the waste correctly. Keep going!\nNegative Feedback: Oops! That\'s not the right bin. Try again and find the correct one.',
-              ),
+              BuildInstructionStep(
+                  context: context,
+                  title: 'Level 1: Introduction to Waste Sorting',
+                  imagePath: 'assets/images/level1.jpg',
+                  description:
+                      'Let\'s start with one waste item. Pick up the item and find the bin that matches the category of the item. Place the item into the correct bin. Great job!'),
+              BuildInstructionStep(
+                  context: context,
+                  title: 'Level 2: Two Waste Items',
+                  imagePath: 'assets/images/level2.jpg',
+                  description:
+                      'Now, we have two items. Look at each item carefully. Place each item into the correct bin. Remember to check the category of the bins. You can do it! Take your time and choose the right bin.'),
+              BuildInstructionStep(
+                  context: context,
+                  title: 'Levels 3-5: Increasing Complexity',
+                  imagePath: 'assets/images/level3.jpg',
+                  description:
+                      'We have more items to sort now. Look at each item. Place each item into the correct bin based on its category. If you\'re unsure, look at the category on the bins to help you decide. Let\'s see how many you can get right! You\'re doing great!'),
+              BuildInstructionStep(
+                  context: context,
+                  title: 'Using the Bins',
+                  imagePath: 'assets/images/trash-bin.png',
+                  description:
+                      'Approach the bin that you think is correct. Place the waste object into the bin with the matching category.'),
+              BuildInstructionStep(
+                  context: context,
+                  title: 'Receiving Feedback',
+                  imagePath: 'assets/images/binn1.png',
+                  description:
+                      'Positive Feedback: Well done! You sorted the waste correctly. Keep going!\nNegative Feedback: Oops! That\'s not the right bin. Try again and find the correct one.'),
               const SizedBox(height: 24.0),
               Center(
                 child: ElevatedButton(
@@ -134,57 +135,6 @@ class InstructionsPage extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildInstructionStep(
-    BuildContext context,
-    String title,
-    String imagePath,
-    String description,
-  ) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.8),
-          borderRadius: BorderRadius.circular(12.0),
-        ),
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Image.asset(
-                  imagePath,
-                  width: 80,
-                  height: 80,
-                ),
-                const SizedBox(width: 8.0),
-                Expanded(
-                  child: Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Roboto-Regular',
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8.0),
-            Text(
-              description,
-              style: const TextStyle(
-                  fontSize: 17,
-                  fontFamily: 'Roboto-Regular',
-                  fontWeight: FontWeight.w500),
-            ),
-          ],
         ),
       ),
     );
